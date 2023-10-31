@@ -90,7 +90,13 @@ export class ArticleService {
       };
     });
 
-    return { articles: articlesWithFavorites, count };
+    const metadata = {
+      limit,
+      page,
+      totalPages: count,
+    };
+
+    return { articles: articlesWithFavorites, metadata };
   }
 
   async createArticle(userId: string, createArticleDto: CreateArticleDto) {
