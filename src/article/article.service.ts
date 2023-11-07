@@ -19,22 +19,29 @@ export class ArticleService {
   }
 
   async getAllArticles(userId: User['id'], query: GetArticlesQuery) {
+    const { author, favorited, tags } = query;
+
     const whereQuery: Prisma.ArticleWhereInput = {
       author: {
         //  contains: name of the author : can query multiple authors
-        ...(query?.author && {
+        ...(author && {
           username: {
-            in: query.author,
+            in: author,
           },
         }),
       },
       favoritedBy: {
-        ...(query?.favorited && {
+        ...(favorited && {
           some: {
             username: {
-              in: query.favorited,
+              in: favorited,
             },
           },
+        }),
+      },
+      tagList: {
+        ...(tags && {
+          hasSome: tags,
         }),
       },
     };
@@ -93,7 +100,7 @@ export class ArticleService {
     const metadata = {
       limit,
       page,
-      totalPages: count,
+      total: count,
     };
 
     return { articles: articlesWithFavorites, metadata };
@@ -124,6 +131,17 @@ export class ArticleService {
     const article = await this.prismaService.article.findUnique({
       where: {
         slug,
+      },
+      include: {
+        author: {
+          select: {
+            id: true,
+            createdAt: true,
+            email: true,
+            username: true,
+            image: true,
+          },
+        },
       },
     });
 

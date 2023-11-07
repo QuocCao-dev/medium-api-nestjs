@@ -3,4 +3,5 @@ export type GetArticlesQuery = {
   page?: string;
   limit?: string;
   favorited?: string[];
+  tags?: string[];
 };
