@@ -39,11 +39,11 @@ export class ArticleService {
           },
         }),
       },
-      tagList: {
-        ...(tags && {
+      ...(tags && {
+        tagList: {
           hasSome: tags,
-        }),
-      },
+        },
+      }),
     };
 
     const orderByQuery: Prisma.ArticleOrderByWithRelationInput = {
