@@ -16,6 +16,12 @@ No authentication required, return all a List of Articles
 `GET /api/articles/:slug` 
 No authentication required, return a single Article
 
+Update: 
++ need to return `isFollowing` and `isFavorited` for the current user
++ check `favoritesCount`, currently its not properly => need to update
++ return `avatar` for the author
+
+
 --- 
 
 ##### CREATE Article
@@ -128,4 +134,5 @@ Authentication required, returns a Profile
 
 ##### UNFOLLOW USER
 `DELETE /api/profiles/:username/follow`
+Authentication required, returns a Profile
 
